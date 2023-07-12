@@ -44,6 +44,11 @@ gv_langu = sy-langu.
 *  WHEN OTHERS.
 *    cl_demo_output=>write( 'Başka Dil Bilmiyorum' ).
 *ENDCASE.
+
+*Alternatif ve kısaltmak için önemli.
+*DATA(variable) = COND type( WHEN case1 THEN result
+*                            WHEN case2 THEN result2 ).
+
 *
 *
 *DATA: gv_text1 TYPE char12.
@@ -116,21 +121,30 @@ DATA: lv_number1 TYPE i VALUE 10,
 *cl_demo_output=>write( |{ lv_number1 } / { lv_number2 } = { lv_result }| ).
 
 
+**CLASS YAPISI
+*DATA(lo_math_op) = NEW zcl_ot_00_mat_ops( ).
+*
+*lo_math_op->calculate_result(
+*  EXPORTING
+*    iv_number1   = lv_number1
+*    iv_number2   = lv_number2
+*    iv_operation = lv_op
+*  IMPORTING
+*    ev_result    = DATA(lv_result)
+*).
+*
+*
+*
+*cl_demo_output=>write( |{ lv_number1 } - { lv_number2 } = { lv_result }| ).
 
-DATA(lo_math_op) = NEW zcl_ot_00_mat_ops( ).
+*Bu kısımlar önemli diğer notepadten al ve oturt. (STRUCTURES)
 
-lo_math_op->calculate_result(
-  EXPORTING
-    iv_number1   = lv_number1
-    iv_number2   = lv_number2
-    iv_operation = lv_op
-  IMPORTING
-    ev_result    = DATA(lv_result)
-).
-
-
-
-cl_demo_output=>write( |{ lv_number1 } - { lv_number2 } = { lv_result }| ).
+*TYPES: BEGIN OF gty_student,
+*       name TYPE c LENGTH 10,
+*       age TYPE i,
+*       id TYPE c LENGTH 10,
+*       bolum TYPE c LENGTH 20,
+*       END OF gty_student.
 
 
 
