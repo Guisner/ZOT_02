@@ -27,41 +27,57 @@ DATA lt_main_modify TYPE TABLE OF zot_02_t_twitter.
 START-OF-SELECTION.
 
   IF p_tw_at = abap_true.
-    SELECT SINGLE COUNT( * )
-     FROM zot_02_t_twitter
-     WHERE tweet_id = p_val1.
-    IF sy-subrc = 0.
-      cl_demo_output=>display( 'Girdiğiniz Tweet ID zaten daha önceden oluşturulmuş. Varolan ID silinebilir ya da ilgili ID Tweet değiştirilebilir.' ).
+    IF p_val1 IS INITIAL.
+      cl_demo_output=>display( 'Tweet ID girmeniz gerekmektedir.' ).
+    ELSEIF p_val2 IS INITIAL.
+      cl_demo_output=>display( 'Tweet kısmı boş bırakılamaz.' ).
     ELSE.
-      APPEND VALUE #( tweet_id = p_val1
-                    tweet = p_val2 ) TO lt_main_modify.
-      MODIFY zot_02_t_twitter FROM TABLE lt_main_modify.
-      cl_demo_output=>display( 'İşlem Başarılı!' ).
+      SELECT SINGLE COUNT( * )
+       FROM zot_02_t_twitter
+       WHERE tweet_id = p_val1.
+      IF sy-subrc = 0.
+        cl_demo_output=>display( 'Girdiğiniz Tweet ID zaten daha önceden oluşturulmuş. Varolan ID silinebilir ya da ilgili ID Tweet değiştirilebilir.' ).
+      ELSE.
+        APPEND VALUE #( tweet_id = p_val1
+                      tweet = p_val2 ) TO lt_main_modify.
+        MODIFY zot_02_t_twitter FROM TABLE lt_main_modify.
+        cl_demo_output=>display( 'İşlem Başarılı!' ).
+      ENDIF.
     ENDIF.
 
   ELSEIF p_tw_deg = abap_true.
-    SELECT SINGLE COUNT( * )
-       FROM zot_02_t_twitter
-       WHERE tweet_id = p_val1.
-    IF sy-subrc = 0.
-      UPDATE zot_02_t_twitter SET tweet = p_val2
-      WHERE tweet_id = p_val1.
-      COMMIT WORK AND WAIT.
-      cl_demo_output=>display( 'İşlem Başarılı!' ).
+    IF p_val1 IS INITIAL.
+      cl_demo_output=>display( 'Tweet ID girmeniz gerekmektedir.' ).
+    ELSEIF p_val2 IS INITIAL.
+      cl_demo_output=>display( 'Tweet kısmı boş bırakılamaz.' ).
     ELSE.
-      cl_demo_output=>display( 'Girdiğiniz ID ye sahip bir Tweet bulunmamaktadır.' ).
+      SELECT SINGLE COUNT( * )
+         FROM zot_02_t_twitter
+         WHERE tweet_id = p_val1.
+      IF sy-subrc = 0.
+        UPDATE zot_02_t_twitter SET tweet = p_val2
+        WHERE tweet_id = p_val1.
+        COMMIT WORK AND WAIT.
+        cl_demo_output=>display( 'İşlem Başarılı!' ).
+      ELSE.
+        cl_demo_output=>display( 'Girdiğiniz ID ye sahip bir Tweet bulunmamaktadır.' ).
+      ENDIF.
     ENDIF.
 
   ELSEIF p_tw_sil = abap_true.
-    SELECT SINGLE COUNT( * )
-       FROM zot_02_t_twitter
-       WHERE tweet_id = p_val1.
-    IF sy-subrc = 0.
-      DELETE FROM zot_02_t_twitter WHERE tweet_id = p_val1.
-      COMMIT WORK AND WAIT.
-      cl_demo_output=>display( 'İşlem Başarılı!' ).
+    IF p_val1 IS INITIAL.
+      cl_demo_output=>display( 'Tweet ID girmeniz gerekmektedir.' ).
     ELSE.
-      cl_demo_output=>display( 'Girdiğiniz ID ye sahip bir Tweet bulunmamaktadır.' ).
+      SELECT SINGLE COUNT( * )
+         FROM zot_02_t_twitter
+         WHERE tweet_id = p_val1.
+      IF sy-subrc = 0.
+        DELETE FROM zot_02_t_twitter WHERE tweet_id = p_val1.
+        COMMIT WORK AND WAIT.
+        cl_demo_output=>display( 'İşlem Başarılı!' ).
+      ELSE.
+        cl_demo_output=>display( 'Girdiğiniz ID ye sahip bir Tweet bulunmamaktadır.' ).
+      ENDIF.
     ENDIF.
 
   ELSE.
@@ -71,7 +87,7 @@ START-OF-SELECTION.
     IF sy-subrc = 0.
       cl_demo_output=>display( abapitter ).
     ELSE.
-      WRITE :/ 'Error'.
+      cl_demo_output=>display( 'Tabloda veri bulunmamaktadır.' ).
     ENDIF.
 
   ENDIF.
