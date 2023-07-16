@@ -10,18 +10,18 @@ DATA: ls_zmn TYPE  zot_02_t_zmn.
 
 SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
 
-SELECT-OPTIONS s_id FOR ls_zmn-indx.
+  SELECT-OPTIONS s_id FOR ls_zmn-indx.
 
 SELECTION-SCREEN END OF BLOCK b1.
 
 START-OF-SELECTION.
 
-SELECT *
-      INTO TABLE lt_zmn
-      FROM zot_02_t_zmn
-      WHERE indx IN s_id.
+  SELECT *
+        INTO TABLE lt_zmn
+        FROM zot_02_t_zmn
+        WHERE indx IN s_id.
 
-LOOP AT lt_zmn INTO ls_zmn.
+  LOOP AT lt_zmn INTO ls_zmn.
 
     DATA: tarih   TYPE dats,
           tarih2  TYPE dats,
@@ -47,7 +47,7 @@ LOOP AT lt_zmn INTO ls_zmn.
     gv_fark = tarih2 - tarih.
     saatfark = saat2 - saat1.
 
-WRITE: | { ls_zmn-indx }. INDEX AIT KAYITTA; |.
+    WRITE: | { ls_zmn-indx }. INDEX AIT KAYITTA; |.
     IF tarih > tarih2.
 *İlk tarih ikinci tarihten büyük olursa yanlış uygulama yapıldığının bilgisi döndürülür.
       WRITE: 'İlk tarih ikinci tarihten büyük olamaz.'.
@@ -78,28 +78,37 @@ WRITE: | { ls_zmn-indx }. INDEX AIT KAYITTA; |.
     gv_dak = saatfark / 60 MOD 60.
     gv_saat = saatfark / 3600.
 
+    IF gv_gun >= 30.
+      gv_gun = gv_gun MOD 30.
+      gv_ay += 1.
+    ENDIF.
+    IF gv_ay >= 12.
+      gv_ay = gv_ay MOD 12.
+      gv_yil += 1.
+    ENDIF.
+
 *Yazdırılmanın yapıldığı kısım.
 
-IF gv_yil NE 0.
-WRITE: | { gv_yil } YIL|.
-ENDIF.
-IF gv_ay NE 0.
-WRITE: | { gv_ay } AY|.
-ENDIF.
-IF gv_gun NE 0.
-WRITE: | { gv_gun } GÜN|.
-ENDIF.
-IF gv_saat NE 0.
-WRITE: | { gv_saat } SAAT|.
-ENDIF.
-IF gv_dak NE 0.
-WRITE: | { gv_dak } DAKİKA|.
-ENDIF.
-IF gv_san NE 0.
-WRITE: | { gv_san } SANİYE|.
-ENDIF.
-WRITE: /.
+    IF gv_yil NE 0.
+      WRITE: | { gv_yil } YIL|.
+    ENDIF.
+    IF gv_ay NE 0.
+      WRITE: | { gv_ay } AY|.
+    ENDIF.
+    IF gv_gun NE 0.
+      WRITE: | { gv_gun } GÜN|.
+    ENDIF.
+    IF gv_saat NE 0.
+      WRITE: | { gv_saat } SAAT|.
+    ENDIF.
+    IF gv_dak NE 0.
+      WRITE: | { gv_dak } DAKİKA|.
+    ENDIF.
+    IF gv_san NE 0.
+      WRITE: | { gv_san } SANİYE|.
+    ENDIF.
+    WRITE: /.
 
-ENDLOOP.
+  ENDLOOP.
 
 END-OF-SELECTION.
