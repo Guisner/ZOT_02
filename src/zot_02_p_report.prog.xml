@@ -51,9 +51,21 @@
       </item>
       <item>
        <ID>S</ID>
+       <KEY>S_SAS_IN</KEY>
+       <ENTRY>SAS Mal Grubu</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
        <KEY>S_SAT_ID</KEY>
        <ENTRY>SAT ID</ENTRY>
        <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SAT_IN</KEY>
+       <ENTRY>SAT Belge Türü</ENTRY>
+       <LENGTH>22</LENGTH>
       </item>
      </TEXTPOOL>
     </item>

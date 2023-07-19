@@ -5,7 +5,7 @@
 *&---------------------------------------------------------------------*
 REPORT zot_02_p_report.
 
-TABLES: eban, ekpo, likp.
+TABLES: eban, ekpo.
 INCLUDE zot_02_i_report_top.
 INCLUDE zot_02_i_report_sel.
 INCLUDE zot_02_i_report_cls.
@@ -17,38 +17,53 @@ INITIALIZATION.
 
 START-OF-SELECTION.
 
-IF p_sat = abap_true.
-  go_main->get_datasat( ).
+  IF p_sat = abap_true.
+    go_main->get_datasat( ).
 
-  SELECT eban~banfn,
-         eban~bnfpo,
-         eban~bsart,
-         eban~matnr,
-         eban~menge,
-         eban~meins
-  FROM eban
-  INNER JOIN ekpo ON ekpo~banfn = eban~banfn AND ekpo~matkl = eban~matkl
-  WHERE eban~banfn IN @s_sat_id
-  INTO TABLE @DATA(lt_sat).
+    SELECT eban~banfn,
+           eban~bnfpo,
+           eban~bsart,
+           eban~matnr,
+           eban~menge,
+           eban~meins
+    FROM eban
+    INNER JOIN ekpo ON ekpo~banfn = eban~banfn AND ekpo~matkl = eban~matkl
+    WHERE eban~banfn IN @s_sat_id AND eban~bsart IN @s_sat_in
+                                            "bnfpo
+    INTO TABLE @gt_sat.
 
-  go_main->display_grid_sat( ).
+    LOOP AT gt_sat INTO gs_sat.
+      IF gs_sat-menge > 10.
+        gs_sat-color = 'C510'.
+      ENDIF.
+      MODIFY gt_sat FROM gs_sat.
+    ENDLOOP.
 
-ELSEIF p_sas = abap_true.
+    go_main->display_grid_sat( ).
+
+  ELSEIF p_sas = abap_true.
     go_main->get_datasas( ).
 
-  SELECT ekpo~ebeln,
-         ekpo~ebelp,
-         ekpo~matnr,
-         ekpo~menge,
-         ekpo~meins
-  FROM ekpo
-  INNER JOIN eban ON ekpo~banfn = eban~banfn AND ekpo~matkl = eban~matkl
-  WHERE ekpo~ebeln IN @s_sas_id
-  INTO TABLE @DATA(lt_sas).
+    SELECT ekpo~ebeln,
+           ekpo~ebelp,
+           ekpo~matnr,
+           ekpo~menge,
+           ekpo~meins
+    FROM ekpo
+    INNER JOIN eban ON eban~banfn = ekpo~banfn AND ekpo~matkl = eban~matkl
+    WHERE ekpo~ebeln IN @s_sas_id AND ekpo~matkl IN @s_sas_in
+    INTO TABLE @gt_sas.
 
-  go_main->display_grid_sas( ).
+    LOOP AT gt_sas INTO gs_sas.
+      IF gs_sas-menge > 10.
+        gs_sas-color = 'C510'.
+      ENDIF.
+      MODIFY gt_sas FROM gs_sas.
+    ENDLOOP.
 
-ENDIF.
+    go_main->display_grid_sas( ).
+
+  ENDIF.
 
 
 END-OF-SELECTION.

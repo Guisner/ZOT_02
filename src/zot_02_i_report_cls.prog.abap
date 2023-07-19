@@ -61,18 +61,13 @@ CLASS lcl_main_controller IMPLEMENTATION.
            menge,
            meins
     FROM eban INTO CORRESPONDING FIELDS OF TABLE @me->mt_eban_list.
-
-    LOOP AT me->mt_eban_list ASSIGNING FIELD-SYMBOL(<Ls_list>).
-      IF <Ls_list>-menge > 10 .
-        <Ls_list>-line_color = 'C500'.
-      ENDIF.
-    ENDLOOP.
   ENDMETHOD.
 
   METHOD get_datasas.
     SELECT ebeln,
            ebelp,
            matnr,
+           menge,
            meins
     FROM ekpo INTO CORRESPONDING FIELDS OF TABLE @me->mt_ekpo_list.
   ENDMETHOD.
@@ -95,8 +90,6 @@ CLASS lcl_main_controller IMPLEMENTATION.
 
   METHOD display_grid_sat.
 
-
-
     DATA: lv_title TYPE lvc_title,
           lv_lines TYPE num10.
 
@@ -109,7 +102,8 @@ CLASS lcl_main_controller IMPLEMENTATION.
     DATA(ls_layo) = VALUE lvc_s_layo( zebra      = abap_true
                                       cwidth_opt = abap_true
                                       sel_mode   = 'A'
-                                      excp_fname = 'COLOR'
+*                                      excp_fname = 'COLOR'
+                                      info_fname = 'COLOR'
                                       excp_led   = abap_true ).
     DATA(ls_vari) = VALUE disvariant( report = sy-repid
                                       username = sy-uname ).
@@ -119,7 +113,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
     DESCRIBE TABLE <lt_data> LINES lv_lines.
     SHIFT lv_lines LEFT DELETING LEADING '0'.
 
-    CONCATENATE 'Rapor' lv_lines 'Kayıt' INTO lv_title SEPARATED BY space.
+    CONCATENATE 'EBAN' sy-uname sy-datum sy-uzeit INTO lv_title SEPARATED BY space.
 
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY_LVC'
       EXPORTING
@@ -130,7 +124,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
         i_save             = 'A'
         is_variant         = ls_vari
       TABLES
-        t_outtab           = <lt_data>
+        t_outtab           = gt_sat
       EXCEPTIONS
         program_error      = 1
         OTHERS             = 2.
@@ -158,7 +152,8 @@ CLASS lcl_main_controller IMPLEMENTATION.
     DATA(ls_layo) = VALUE lvc_s_layo( zebra      = abap_true
                                       cwidth_opt = abap_true
                                       sel_mode   = 'A'
-                                      excp_fname = 'COLOR'
+*                                      excp_fname = 'COLOR'
+                                      info_fname = 'COLOR'
                                       excp_led   = abap_true ).
 *    DATA(ls_vari) = VALUE disvariant( report = sy-repid
 *                                      username = sy-uname ).
@@ -168,7 +163,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
     DESCRIBE TABLE <lt_data> LINES lv_lines.
     SHIFT lv_lines LEFT DELETING LEADING '0'.
 
-    CONCATENATE 'Rapor' lv_lines 'Kayıt' INTO lv_title SEPARATED BY space.
+    CONCATENATE 'EKPO' sy-uname sy-datum sy-uzeit INTO lv_title SEPARATED BY space.
 
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY_LVC'
       EXPORTING
@@ -179,7 +174,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
         i_save             = 'A'
 *        is_variant         = ls_vari
       TABLES
-        t_outtab           = <lt_data>
+        t_outtab           = gt_sas
       EXCEPTIONS
         program_error      = 1
         OTHERS             = 2.
@@ -213,7 +208,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
           i_save                        = 'A'
           is_layout                     = me->fill_main_layout( )
         CHANGING
-          it_outtab                     = <lt_data>
+          it_outtab                     = gt_sat
           it_fieldcatalog               = lt_fcat_main
         EXCEPTIONS
           invalid_parameter_combination = 1
@@ -252,7 +247,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
           i_save                        = 'A'
           is_layout                     = me->fill_main_layout( )
         CHANGING
-          it_outtab                     = <lt_data>
+          it_outtab                     = gt_sas
           it_fieldcatalog               = lt_fcat_main
         EXCEPTIONS
           invalid_parameter_combination = 1
