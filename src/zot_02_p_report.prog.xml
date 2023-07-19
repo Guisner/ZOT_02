@@ -15,9 +15,45 @@
      <LANGUAGE>E</LANGUAGE>
      <TEXTPOOL>
       <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>SAT-SAS Filter</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Seçim</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
        <ID>R</ID>
        <ENTRY>REPORT HOMEWORK</ENTRY>
        <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_SAS</KEY>
+       <ENTRY>SAS</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_SAT</KEY>
+       <ENTRY>SAT</ENTRY>
+       <LENGTH>11</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SAS_ID</KEY>
+       <ENTRY>SAS ID</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>S_SAT_ID</KEY>
+       <ENTRY>SAT ID</ENTRY>
+       <LENGTH>14</LENGTH>
       </item>
      </TEXTPOOL>
     </item>
