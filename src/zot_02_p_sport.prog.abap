@@ -12,47 +12,25 @@ TYPES: BEGIN OF gty_torba,
          torba TYPE numc1,
        END OF gty_torba,
 
-       BEGIN OF gty_grupa,
+       BEGIN OF gty_grup,
          takim TYPE char30,
          ulke  TYPE char2,
          torba TYPE numc1,
-       END OF gty_grupa,
-
-       BEGIN OF gty_grupb,
-         takim TYPE char30,
-         ulke  TYPE char2,
-         torba TYPE numc1,
-       END OF gty_grupb,
-
-       BEGIN OF gty_grupc,
-         takim TYPE char30,
-         ulke  TYPE char2,
-         torba TYPE numc1,
-       END OF gty_grupc,
-
-       BEGIN OF gty_grupd,
-         takim TYPE char30,
-         ulke  TYPE char2,
-         torba TYPE numc1,
-       END OF gty_grupd.
+       END OF gty_grup.
 
 DATA: lv_indx   TYPE i,
       lv_indxin TYPE i.
 
 DATA: lt_torbalar TYPE TABLE OF gty_torba.
 DATA: ls_torba TYPE gty_torba.
-DATA: lt_a TYPE TABLE OF gty_grupa,
-      lt_b TYPE TABLE OF gty_grupb,
-      lt_c TYPE TABLE OF gty_grupc,
-      lt_d TYPE TABLE OF gty_grupd.
+DATA: lt_a TYPE TABLE OF gty_grup,
+      lt_b TYPE TABLE OF gty_grup,
+      lt_c TYPE TABLE OF gty_grup,
+      lt_d TYPE TABLE OF gty_grup.
 DATA: lv_boola TYPE bool,
       lv_boolb TYPE bool,
       lv_boolc TYPE bool,
       lv_boold TYPE bool.
-
-*DATA(r) = cl_abap_random_int=>create( seed = CONV i( sy-uzeit )
-*                                      min  = 1
-*                                      max = 4 ).
 
 lt_torbalar = VALUE #( BASE lt_torbalar ( id = 1
                                     takim = 'Liverpool'
@@ -153,7 +131,6 @@ WHILE lv_indx < 16.
           IF sy-subrc <> 0 .
             READ TABLE lt_b INTO DATA(ls_b2) WITH KEY torba = ls_torba-torba.
             IF sy-subrc <> 0 .
-              "READ table lt_torbalar into ls_torba INDEX lv_indx.
               APPEND VALUE #( takim = ls_torba-takim ulke = ls_torba-ulke torba = ls_torba-torba  ) TO lt_b .
               lv_indx += 1.
               lv_boolb = abap_true.
@@ -168,7 +145,6 @@ WHILE lv_indx < 16.
           IF sy-subrc <> 0 .
             READ TABLE lt_c INTO DATA(ls_c2) WITH KEY torba = ls_torba-torba.
             IF sy-subrc <> 0 .
-*              READ table lt_torbalar into ls_torba INDEX lv_indx.
               APPEND VALUE #( takim = ls_torba-takim ulke = ls_torba-ulke torba = ls_torba-torba  ) TO lt_c.
               lv_indx += 1.
               lv_boolc = abap_true.
@@ -183,7 +159,6 @@ WHILE lv_indx < 16.
           IF sy-subrc <> 0 .
             READ TABLE lt_d INTO DATA(ls_d2) WITH KEY torba = ls_torba-torba.
             IF sy-subrc <> 0 .
-*              READ table lt_torbalar into ls_torba INDEX lv_indx.
               APPEND VALUE #( takim = ls_torba-takim ulke = ls_torba-ulke torba = ls_torba-torba  ) TO lt_d.
               lv_indx += 1.
               lv_boold = abap_true.
