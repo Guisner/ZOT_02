@@ -61,7 +61,7 @@
      <NAME>SFPSY</NAME>
      <GENERATED/>
      <STATE>A</STATE>
-     <CONDITION href="#o27"/>
+     <CONDITION href="#o29"/>
      <PARENT href="#o2"/>
      <SUCCESSOR href="#o12"/>
      <CHILD href="#o4"/>
@@ -164,7 +164,7 @@
      <NAME>LT_SCARR</NAME>
      <GENERATED/>
      <STATE>A</STATE>
-     <CONDITION href="#o26"/>
+     <CONDITION href="#o28"/>
      <PARENT href="#o2"/>
      <SUCCESSOR href="#o24"/>
      <CHILD href="#o14"/>
@@ -299,9 +299,9 @@
      <NAME>LV_USDNUM</NAME>
      <GENERATED/>
      <STATE>A</STATE>
-     <CONDITION href="#o25"/>
+     <CONDITION href="#o27"/>
      <PARENT href="#o2"/>
-     <SUCCESSOR/>
+     <SUCCESSOR href="#o25"/>
      <CHILD/>
     </CL_FP_NODE>
     <CL_FP_DATA classVersion="1">
@@ -309,19 +309,41 @@
      <FIELD_LABEL/>
     </CL_FP_DATA>
    </cls:CL_FP_DATA>
-   <cls:CL_FP_CONDITION id="o25">
+   <cls:CL_FP_DATA id="o25">
+    <CL_FP_NODE classVersion="1">
+     <ID>BBD1F2FEA6871EDE89F1DB46F7D82323</ID>
+     <NAME>LV_BRCOD</NAME>
+     <GENERATED/>
+     <STATE>A</STATE>
+     <CONDITION href="#o26"/>
+     <PARENT href="#o2"/>
+     <SUCCESSOR/>
+     <CHILD/>
+    </CL_FP_NODE>
+    <CL_FP_DATA classVersion="1">
+     <FIELD>LV_BRCOD</FIELD>
+     <FIELD_LABEL/>
+    </CL_FP_DATA>
+   </cls:CL_FP_DATA>
+   <cls:CL_FP_CONDITION id="o26">
+    <CL_FP_CONDITION classVersion="1">
+     <NODE href="#o25"/>
+     <CONDITIONS/>
+    </CL_FP_CONDITION>
+   </cls:CL_FP_CONDITION>
+   <cls:CL_FP_CONDITION id="o27">
     <CL_FP_CONDITION classVersion="1">
      <NODE href="#o24"/>
      <CONDITIONS/>
     </CL_FP_CONDITION>
    </cls:CL_FP_CONDITION>
-   <cls:CL_FP_CONDITION id="o26">
+   <cls:CL_FP_CONDITION id="o28">
     <CL_FP_CONDITION classVersion="1">
      <NODE href="#o12"/>
      <CONDITIONS/>
     </CL_FP_CONDITION>
    </cls:CL_FP_CONDITION>
-   <cls:CL_FP_CONDITION id="o27">
+   <cls:CL_FP_CONDITION id="o29">
     <CL_FP_CONDITION classVersion="1">
      <NODE href="#o3"/>
      <CONDITIONS/>

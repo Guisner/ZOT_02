@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xfa generator="AdobeLiveCycleDesigner_V11.0.1.20140218.1.907162_SAP" APIVersion="3.6.13324.0"?><xdp:xdp xmlns:xdp="http://ns.adobe.com/xdp/" timeStamp="2023-07-20T19:43:15Z" uuid="4ef40477-5913-4843-8e5a-510e1a342a6f">
+<?xfa generator="AdobeLiveCycleDesigner_V11.0.1.20140218.1.907162_SAP" APIVersion="3.6.13324.0"?><xdp:xdp xmlns:xdp="http://ns.adobe.com/xdp/" timeStamp="2023-07-21T06:28:22Z" uuid="4ef40477-5913-4843-8e5a-510e1a342a6f">
 <template xmlns:xliff="urn:oasis:names:tc:xliff:document:1.1" xmlns="http://www.xfa.org/schema/xfa-template/3.3/">
    <?formServer defaultPDFRenderFormat acrobat10.0dynamic?>
    <subform layout="tb" locale="tr_TR" name="data" restoreState="auto">
@@ -363,22 +363,21 @@ Verilerin Saklanması</text>
                <margin bottomInset="0mm" leftInset="0mm" rightInset="0mm" topInset="0mm"/>
                <para vAlign="middle"/>
             </draw>
-            <field h="13.594mm" name="LV_USDNUM" w="22.869mm" x="15.875mm" y="257.175mm">
+            <?templateDesigner expand 1?>
+            <field h="13.594mm" name="LV_BRCOD" w="22.869mm" x="9.525mm" y="260.35mm">
                <ui>
                   <barcode checksum="auto" dataLength="10" textLocation="belowEmbedded" type="code128C" wideNarrowRatio="fixed"/>
                </ui>
                <font typeface="Courier New"/>
                <value>
-                  <text xliff:rid="C117347B-475D-40E7-B3A7-4EE97193DCBB">12345678</text>
+                  <text xliff:rid="6836A955-D784-4465-A58A-490B6C58E1EC">1234567890</text>
                </value>
-               <bind match="dataRef" ref="$.LV_USDNUM"/>
-               <validate nullTest="error">
-                  <script contentType="application/x-javascript">this.isNull || (this.rawValue &gt;= -2147483648 &amp;&amp; this.rawValue &lt;= 2147483647);
-
-</script>
-               </validate>
+               <bind match="dataRef" ref="$.LV_BRCOD"/>
+               <desc>
+                  <text name="Schema Annotation">Karakter alanı uzunluğu 10</text>
+               </desc>
             </field>
-            <?templateDesigner expand 1?></pageArea>
+         </pageArea>
          <?templateDesigner expand 1?></pageSet>
       <subform layout="tb" w="8in">
          <subform columnWidths="50.8001mm 50.8001mm 50.8001mm 50.8001mm" layout="table" name="LT_SCARR">
@@ -577,7 +576,7 @@ Verilerin Saklanması</text>
       </desc>
       <?templateDesigner expand 1?>
       <?renderCache.subset "Arial" 0 0 UTF-16 2 208 00030006000A000F0011001D0024002500270029002A002B002C002E002F0032003300350036003700380039003C004400450046004700480049004A004B004C004E004F005000510052005300550056005700580059005B005C005D006F007C008100D500F700FA?>
-      <?renderCache.subset "Courier New" 0 0 UTF-16 2 32 001400150016001700180019001A001B?></subform>
+      <?renderCache.subset "Courier New" 0 0 UTF-16 2 40 0013001400150016001700180019001A001B001C?></subform>
    <?templateDesigner DefaultPreviewDynamic 1?>
    <?templateDesigner DefaultRunAt client?>
    <?templateDesigner Grid show:1, snap:1, units:0, color:ff8080, origin:(0,0), interval:(125000,125000)?>
@@ -588,7 +587,7 @@ Verilerin Saklanması</text>
    <?acrobat JavaScript strictScoping?>
    <?templateDesigner FormTargetVersion 33?>
    <?templateDesigner Rulers horizontal:1, vertical:1, guidelines:1, crosshairs:0?>
-   <?templateDesigner Zoom 140?></template>
+   <?templateDesigner Zoom 147?></template>
 <config xmlns="http://www.xfa.org/schema/xci/3.0/">
    <agent name="designer">
       <!--  [0..n]  -->
@@ -650,6 +649,7 @@ Verilerin Saklanması</text>
             </DATA>
          </LT_SCARR>
          <LV_USDNUM/>
+         <LV_BRCOD/>
       </data>
    </dd:dataDescription>
 </xfa:datasets>
@@ -761,7 +761,7 @@ Verilerin Saklanması</text>
 <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.4-c005 78.150055, 2013/08/07-22:58:47        ">
    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
       <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:desc="http://ns.adobe.com/xfa/promoted-desc/" rdf:about="">
-         <xmp:MetadataDate>2023-07-20T19:43:15Z</xmp:MetadataDate>
+         <xmp:MetadataDate>2023-07-21T06:28:22Z</xmp:MetadataDate>
          <xmp:CreatorTool>Adobe LiveCycle Designer 11.0</xmp:CreatorTool>
          <pdf:Producer>Adobe LiveCycle Designer 11.0</pdf:Producer>
          <xmpMM:DocumentID>uuid:4ef40477-5913-4843-8e5a-510e1a342a6f</xmpMM:DocumentID>

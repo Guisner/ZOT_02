@@ -6,7 +6,7 @@
 REPORT zot_02_p_flight.
 
 SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
-*  PARAMETERS: p_docno TYPE ebeln.
+  PARAMETERS: p_docno TYPE char10.
 SELECTION-SCREEN END OF BLOCK b1.
 
 START-OF-SELECTION.
@@ -52,7 +52,7 @@ START-OF-SELECTION.
   CALL FUNCTION l_fmname
     EXPORTING
       /1bcdwb/docparams  = l_docparams
-*      iv_document_no     = p_docno
+      LV_BRCOD     = p_docno
     IMPORTING
       /1bcdwb/formoutput = l_formoutput
     EXCEPTIONS
