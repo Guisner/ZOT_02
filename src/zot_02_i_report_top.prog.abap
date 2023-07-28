@@ -2,7 +2,7 @@
 *& Include zot_02_i_report_top
 *&---------------------------------------------------------------------*
 
-DATA: go_alv    TYPE REF TO cl_salv_table,
+DATA: "go_alv    TYPE REF TO cl_gui_alv_grid,
       gv_ucomm  TYPE sy-ucomm,
       gv_okcode TYPE sy-ucomm.
 

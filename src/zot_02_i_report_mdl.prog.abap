@@ -19,5 +19,5 @@ MODULE pbo_0100 OUTPUT.
 
   SET PF-STATUS 'STANDARD'.
   SET TITLEBAR 'TITLE_100'.
-  go_main->init_0100( ).
+*  go_main->init_0100( ).
 ENDMODULE.

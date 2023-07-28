@@ -19,8 +19,8 @@ CLASS lcl_main_controller DEFINITION CREATE PRIVATE FINAL.
       display_data_sas,
       display_grid_sat,
       display_grid_sas,
-      init_0100,
-      init_0100_sas,
+*      init_0100,
+*      init_0100_sas,
       free.
 
   PRIVATE SECTION.
@@ -186,83 +186,83 @@ CLASS lcl_main_controller IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD init_0100.
-    IF me->mo_main_custom_container IS INITIAL.
-      me->mo_main_custom_container = NEW cl_gui_custom_container( container_name = 'CC_MAIN' ).
-      me->mo_main_grid = NEW cl_gui_alv_grid( i_parent = me->mo_main_custom_container i_appl_events = abap_true ).
-
-      FIELD-SYMBOLS <lt_data> TYPE STANDARD TABLE.
-      ASSIGN me->mt_eban_list TO <lt_data>.
-
-      DATA(ls_vari) = VALUE disvariant( report = sy-repid
-                                        username = sy-uname ).
-
-*      me->set_handler_for_main( ).
-
-      DATA(lt_fcat_main) = me->fill_main_fieldcat_sat( ).
-
-      me->mo_main_grid->set_table_for_first_display(
-        EXPORTING
-          i_bypassing_buffer            = abap_true
-          is_variant                    = ls_vari
-          i_save                        = 'A'
-          is_layout                     = me->fill_main_layout( )
-        CHANGING
-          it_outtab                     = gt_sat
-          it_fieldcatalog               = lt_fcat_main
-        EXCEPTIONS
-          invalid_parameter_combination = 1
-          program_error                 = 2
-          too_many_lines                = 3
-          OTHERS                        = 4
-      ).
-      IF sy-subrc <> 0.
-        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-                   WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-      ENDIF.
-    ELSE.
-      me->mo_main_grid->refresh_table_display( is_stable = VALUE #( col = abap_true row = abap_true ) ).
-    ENDIF.
-  ENDMETHOD.
-
-  METHOD init_0100_sas.
-    IF me->mo_main_custom_container IS INITIAL.
-      me->mo_main_custom_container = NEW cl_gui_custom_container( container_name = 'CC_MAIN' ).
-      me->mo_main_grid = NEW cl_gui_alv_grid( i_parent = me->mo_main_custom_container i_appl_events = abap_true ).
-
-      FIELD-SYMBOLS <lt_data> TYPE STANDARD TABLE.
-      ASSIGN me->mt_eban_list TO <lt_data>.
-
-      DATA(ls_vari) = VALUE disvariant( report = sy-repid
-                                        username = sy-uname ).
-
-*      me->set_handler_for_main( ).
-
-      DATA(lt_fcat_main) = me->fill_main_fieldcat_sas( ).
-
-      me->mo_main_grid->set_table_for_first_display(
-        EXPORTING
-          i_bypassing_buffer            = abap_true
-          is_variant                    = ls_vari
-          i_save                        = 'A'
-          is_layout                     = me->fill_main_layout( )
-        CHANGING
-          it_outtab                     = gt_sas
-          it_fieldcatalog               = lt_fcat_main
-        EXCEPTIONS
-          invalid_parameter_combination = 1
-          program_error                 = 2
-          too_many_lines                = 3
-          OTHERS                        = 4
-      ).
-      IF sy-subrc <> 0.
-        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-                   WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-      ENDIF.
-    ELSE.
-      me->mo_main_grid->refresh_table_display( is_stable = VALUE #( col = abap_true row = abap_true ) ).
-    ENDIF.
-  ENDMETHOD.
+*  METHOD init_0100.
+*    IF me->mo_main_custom_container IS INITIAL.
+*      me->mo_main_custom_container = NEW cl_gui_custom_container( container_name = 'CC_MAIN' ).
+*      me->mo_main_grid = NEW cl_gui_alv_grid( i_parent = me->mo_main_custom_container i_appl_events = abap_true ).
+*
+*      FIELD-SYMBOLS <lt_data> TYPE STANDARD TABLE.
+*      ASSIGN me->mt_eban_list TO <lt_data>.
+*
+*      DATA(ls_vari) = VALUE disvariant( report = sy-repid
+*                                        username = sy-uname ).
+*
+**      me->set_handler_for_main( ).
+*
+*      DATA(lt_fcat_main) = me->fill_main_fieldcat_sat( ).
+*
+*      me->mo_main_grid->set_table_for_first_display(
+*        EXPORTING
+*          i_bypassing_buffer            = abap_true
+*          is_variant                    = ls_vari
+*          i_save                        = 'A'
+*          is_layout                     = me->fill_main_layout( )
+*        CHANGING
+*          it_outtab                     = gt_sat
+*          it_fieldcatalog               = lt_fcat_main
+*        EXCEPTIONS
+*          invalid_parameter_combination = 1
+*          program_error                 = 2
+*          too_many_lines                = 3
+*          OTHERS                        = 4
+*      ).
+*      IF sy-subrc <> 0.
+*        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                   WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*      ENDIF.
+*    ELSE.
+*      me->mo_main_grid->refresh_table_display( is_stable = VALUE #( col = abap_true row = abap_true ) ).
+*    ENDIF.
+*  ENDMETHOD.
+*
+*  METHOD init_0100_sas.
+*    IF me->mo_main_custom_container IS INITIAL.
+*      me->mo_main_custom_container = NEW cl_gui_custom_container( container_name = 'CC_MAIN' ).
+*      me->mo_main_grid = NEW cl_gui_alv_grid( i_parent = me->mo_main_custom_container i_appl_events = abap_true ).
+*
+*      FIELD-SYMBOLS <lt_data> TYPE STANDARD TABLE.
+*      ASSIGN me->mt_eban_list TO <lt_data>.
+*
+*      DATA(ls_vari) = VALUE disvariant( report = sy-repid
+*                                        username = sy-uname ).
+*
+**      me->set_handler_for_main( ).
+*
+*      DATA(lt_fcat_main) = me->fill_main_fieldcat_sas( ).
+*
+*      me->mo_main_grid->set_table_for_first_display(
+*        EXPORTING
+*          i_bypassing_buffer            = abap_true
+*          is_variant                    = ls_vari
+*          i_save                        = 'A'
+*          is_layout                     = me->fill_main_layout( )
+*        CHANGING
+*          it_outtab                     = gt_sas
+*          it_fieldcatalog               = lt_fcat_main
+*        EXCEPTIONS
+*          invalid_parameter_combination = 1
+*          program_error                 = 2
+*          too_many_lines                = 3
+*          OTHERS                        = 4
+*      ).
+*      IF sy-subrc <> 0.
+*        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                   WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*      ENDIF.
+*    ELSE.
+*      me->mo_main_grid->refresh_table_display( is_stable = VALUE #( col = abap_true row = abap_true ) ).
+*    ENDIF.
+*  ENDMETHOD.
 
   METHOD fill_main_fieldcat_sat.
     DATA: lv_fname  TYPE lvc_fname,
