@@ -43,6 +43,12 @@ DATA:  BEGIN OF STATUS_ZOT_02_T_P_MAST               .   "state vector
 DATA:  END OF STATUS_ZOT_02_T_P_MAST               .
 CONTROLS: TCTRL_ZOT_02_T_P_MAST
             TYPE TABLEVIEW USING SCREEN '0002'.
+*...processing: ZOT_02_T_SHCLASS................................*
+DATA:  BEGIN OF STATUS_ZOT_02_T_SHCLASS              .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZOT_02_T_SHCLASS              .
+CONTROLS: TCTRL_ZOT_02_T_SHCLASS
+            TYPE TABLEVIEW USING SCREEN '0008'.
 *.........table declarations:.................................*
 TABLES: *ZOT_02_T_P_AILE               .
 TABLES: *ZOT_02_T_P_ATUR               .
@@ -51,6 +57,7 @@ TABLES: *ZOT_02_T_P_ETUR               .
 TABLES: *ZOT_02_T_P_ILTSM              .
 TABLES: *ZOT_02_T_P_ITUR               .
 TABLES: *ZOT_02_T_P_MAST               .
+TABLES: *ZOT_02_T_SHCLASS              .
 TABLES: ZOT_02_T_P_AILE                .
 TABLES: ZOT_02_T_P_ATUR                .
 TABLES: ZOT_02_T_P_EGTM                .
@@ -58,6 +65,7 @@ TABLES: ZOT_02_T_P_ETUR                .
 TABLES: ZOT_02_T_P_ILTSM               .
 TABLES: ZOT_02_T_P_ITUR                .
 TABLES: ZOT_02_T_P_MAST                .
+TABLES: ZOT_02_T_SHCLASS               .
 
 * general table data declarations..............
   INCLUDE LSVIMTDT                                .

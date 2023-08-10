@@ -6,26 +6,36 @@ TABLES: sbook, sflight, zot_02_t_tickets.
 
 TYPES: BEGIN OF gty_table1,
        id TYPE numc3,
+       carrid TYPE s_carrid,
        carrname TYPE s_carrname,
        nereden TYPE zot_02_e_from,
        nereye TYPE zot_02_e_to,
+       tarih TYPE s_date,
+       classf TYPE char20,
+       order_date TYPE s_bdate,
+       luggweight TYPE s_lugweigh,
+       wunit TYPE s_weiunit,
        END OF gty_table1.
 
 TYPES: BEGIN OF gty_table2,
        id TYPE numc3,
-       passname TYPE s_passname,
-       passsur TYPE s_passname2,
+       passname TYPE zot_02_e_name,
        passage TYPE zot_02_e_passage,
        passbirth TYPE s_birthdat,
        END OF gty_table2.
 
 TYPES: BEGIN OF gty_table3,
        id TYPE numc3,
-       carrid TYPE s_carr_id,
+       carrid TYPE s_carrid,
        carrname TYPE s_carrname,
        nereden TYPE zot_02_e_from,
        nereye TYPE zot_02_e_to,
-       passname TYPE s_passname,
+       tarih TYPE s_date,
+       classf TYPE char20,
+       order_date TYPE s_bdate,
+       luggweight TYPE s_lugweigh,
+       wunit TYPE s_weiunit,
+       passname TYPE zot_02_e_name,
        passage TYPE zot_02_e_passage,
        passbirth TYPE s_birthdat,
        END OF gty_table3.
@@ -51,8 +61,7 @@ DATA: ls_fieldcat TYPE lvc_s_fcat,
       lt_tableal2 TYPE TABLE OF gty_table2,
       lt_dbtable TYPE TABLE OF zot_02_t_tickets,
       ls_dbtable TYPE zot_02_t_tickets,
-      lt_scarr TYPE TABLE OF SCARR,
-      ls_scarr TYPE SCARR,
-      ls_kayit TYPE SCARR.
+      ls_kayit TYPE SCARR,
+      ls_stable TYPE lvc_s_stbl.
 
 FIELD-SYMBOLS: <gfs_scarr> TYPE gty_table1.

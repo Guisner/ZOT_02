@@ -12,8 +12,7 @@ CLASS lcl_main_controller DEFINITION CREATE PRIVATE FINAL.
           VALUE(ro_instance) TYPE REF TO lcl_main_controller.
 
     METHODS: display_alv,
-      register_f4.
-*      set_dropdown.
+             set_dropdown.
 
   PRIVATE SECTION.
     CLASS-DATA:
@@ -21,16 +20,6 @@ CLASS lcl_main_controller DEFINITION CREATE PRIVATE FINAL.
       mo_main_custom_container TYPE REF TO cl_gui_container,
       "! Main ALV grid
       mo_main_grid             TYPE REF TO cl_gui_alv_grid.
-
-    METHODS handle_onf4
-      FOR EVENT onf4 OF cl_gui_alv_grid
-      IMPORTING
-        e_fieldname
-        e_fieldvalue
-        es_row_no
-        er_event_data
-        et_bad_cells
-        e_display.
 
 
 ENDCLASS.
@@ -80,9 +69,6 @@ CLASS lcl_main_controller IMPLEMENTATION.
       EXPORTING
         i_parent = go_gui1. "Obje tanımlaması
 
-    CALL METHOD register_f4.
-    SET HANDLER handle_onf4 FOR go_alv.
-
     CREATE OBJECT go_alv2
       EXPORTING
         i_parent = go_gui2. "Obje tanımlaması
@@ -91,76 +77,78 @@ CLASS lcl_main_controller IMPLEMENTATION.
       EXPORTING
         i_parent = go_cont2. "Obje tanımlaması
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'ID'.
-    ls_fieldcat-scrtext_s = 'Yolcu ID'.
-    ls_fieldcat-scrtext_m = 'Yolcu ID'.
-    ls_fieldcat-scrtext_l = 'Yolcu ID'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'ID'.
-    ls_fieldcat-scrtext_s = 'Kayıt ID'.
-    ls_fieldcat-scrtext_m = 'Kayıt ID'.
-    ls_fieldcat-scrtext_l = 'Kayıt ID'.
-    APPEND ls_fieldcat TO lt_fcatdb.
 
-*    CLEAR ls_fieldcat.
-*    ls_fieldcat-fieldname = 'CARRID'.
-*    ls_fieldcat-scrtext_s = 'Hav. Kodu'.
-*    ls_fieldcat-scrtext_m = 'Havayolu Kodu'.
-*    ls_fieldcat-scrtext_l = 'Havayolu Kodu'.
-**    ls_fieldcat-ref_table = 'scarr'.
-*    APPEND ls_fieldcat TO lt_fcatdb.
-*    ls_fieldcat-auto_value = 'X'.
-*    ls_fieldcat-edit = 'X'.
-*    ls_fieldcat-drdn_hndl = 1.
-*    APPEND ls_fieldcat TO lt_fieldcat.
+    CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+      EXPORTING
+        i_structure_name       = 'ZOT_02_S_REZERVASYON'
+        i_bypassing_buffer     = abap_true
+      CHANGING
+        ct_fieldcat            = lt_fieldcat
+      EXCEPTIONS
+        inconsistent_interface = 1
+        program_error          = 2
+        OTHERS                 = 3.
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'CARRNAME'.
-    ls_fieldcat-scrtext_s = 'Hav. Adı'.
-    ls_fieldcat-scrtext_m = 'Havayolları Adı'.
-    ls_fieldcat-scrtext_l = 'Havayolları Adı'.
-*    ls_fieldcat-ref_table = 'scarr'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-*    ls_fieldcat-f4availabl = 'X'.
-    ls_fieldcat-style = cl_gui_alv_grid=>mc_style_f4.
-    APPEND ls_fieldcat TO lt_fieldcat.
+    LOOP AT lt_fieldcat ASSIGNING FIELD-SYMBOL(<lfs_001>).
+      IF <lfs_001> IS ASSIGNED.
+        CASE <lfs_001>-fieldname.
+          WHEN 'ID'.
+            <lfs_001>-edit = 'X'.
+            <lfs_001>-scrtext_s = 'Yolcu ID'.
+            <lfs_001>-scrtext_m = 'Yolcu ID'.
+            <lfs_001>-scrtext_l = 'Yolcu ID'.
+            <lfs_001>-outputlen = 6.
+          WHEN 'CARRID'.
+            <lfs_001>-edit = 'X'.
+          WHEN 'CARRNAME'.
+*            <lfs_001>-edit = 'X'.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'NEREDEN'.
+            <lfs_001>-edit = 'X'.
+            <lfs_001>-auto_value = 'X'.
+            <lfs_001>-outputlen = 10.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'NEREYE'.
+            <lfs_001>-edit = 'X'.
+            <lfs_001>-auto_value = 'X'.
+            <lfs_001>-outputlen = 10.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'TARIH'.
+            <lfs_001>-edit = 'X'.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'CLASSF'.
+            <lfs_001>-edit = 'X'.
+            <lfs_001>-coltext = 'Class'.
+            <lfs_001>-scrtext_s = 'Class'.
+            <lfs_001>-scrtext_m = 'Class'.
+            <lfs_001>-scrtext_l = 'Class'.
+            <lfs_001>-outputlen = 12.
+            APPEND <lfs_001> TO lt_fcatdb.
+            <lfs_001>-drdn_hndl = 1.
+          WHEN 'ORDER_DATE'.
+            <lfs_001>-edit = 'X'.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'LUGGWEIGHT'.
+            <lfs_001>-edit = 'X'.
+            APPEND <lfs_001> TO lt_fcatdb.
+          WHEN 'WUNIT'.
+            <lfs_001>-edit = 'X'.
+            APPEND <lfs_001> TO lt_fcatdb.
+        ENDCASE.
+      ENDIF.
+    ENDLOOP.
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'NEREDEN'.
-    ls_fieldcat-scrtext_s = 'Nereden'.
-    ls_fieldcat-scrtext_m = 'Nereden'.
-    ls_fieldcat-scrtext_l = 'Nereden'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
-
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'NEREYE'.
-    ls_fieldcat-scrtext_s = 'Nereye'.
-    ls_fieldcat-scrtext_m = 'Nereye'.
-    ls_fieldcat-scrtext_l = 'Nereye'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
-
+    set_dropdown( ).
 
     CALL METHOD go_alv->set_table_for_first_display
       EXPORTING
-        i_structure_name = 'GTY_TABLE1'
+        i_structure_name = 'ZOT_02_S_REZERVASYON'
       CHANGING
         it_fieldcatalog  = lt_fieldcat
         it_outtab        = lt_tableal1
       EXCEPTIONS
         OTHERS           = 1.
-
 
     CALL METHOD go_alv->register_edit_event
       EXPORTING
@@ -168,59 +156,53 @@ CLASS lcl_main_controller IMPLEMENTATION.
 
 
     CLEAR lt_fieldcat.
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'ID'.
-    ls_fieldcat-scrtext_s = 'Yolcu ID'.
-    ls_fieldcat-scrtext_m = 'Yolcu ID'.
-    ls_fieldcat-scrtext_l = 'Yolcu ID'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'PASSNAME'.
-    ls_fieldcat-scrtext_s = 'Yolcu İsmi'.
-    ls_fieldcat-scrtext_m = 'Yolcu İsmi'.
-    ls_fieldcat-scrtext_l = 'Yolcu İsmi'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
+    CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
+      EXPORTING
+        i_structure_name       = 'ZOT_02_S_YOLCU'
+        i_bypassing_buffer     = abap_true
+      CHANGING
+        ct_fieldcat            = lt_fieldcat
+      EXCEPTIONS
+        inconsistent_interface = 1
+        program_error          = 2
+        OTHERS                 = 3.
 
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'PASSSUR'.
-    ls_fieldcat-scrtext_s = 'Yolcu Soyadı'.
-    ls_fieldcat-scrtext_m = 'Yolcu Soyadı'.
-    ls_fieldcat-scrtext_l = 'Yolcu Soyadı'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
-
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'PASSAGE'.
-    ls_fieldcat-scrtext_s = 'Yolcu Yaşı'.
-    ls_fieldcat-scrtext_m = 'Yolcu Yaşı'.
-    ls_fieldcat-scrtext_l = 'Yolcu Yaşı'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
-
-    CLEAR ls_fieldcat.
-    ls_fieldcat-fieldname = 'PASSBIRTH'.
-    ls_fieldcat-scrtext_s = 'Yol. D. T.'.
-    ls_fieldcat-scrtext_m = 'Yolcu Doğum Tarihi'.
-    ls_fieldcat-scrtext_l = 'Yolcu Doğum Tarihi'.
-*    ls_fieldcat-ref_table = 'zot_02_t_tickets'.
-    APPEND ls_fieldcat TO lt_fcatdb.
-    ls_fieldcat-edit = 'X'.
-    APPEND ls_fieldcat TO lt_fieldcat.
-
+    LOOP AT lt_fieldcat ASSIGNING FIELD-SYMBOL(<lfs_002>).
+      IF <lfs_002> IS ASSIGNED.
+        CASE <lfs_002>-fieldname.
+          WHEN 'ID'.
+            <lfs_002>-edit = 'X'.
+            <lfs_002>-scrtext_s = 'Yolcu ID'.
+            <lfs_002>-scrtext_m = 'Yolcu ID'.
+            <lfs_002>-scrtext_l = 'Yolcu ID'.
+            <lfs_002>-outputlen = 6.
+            APPEND <lfs_002> TO lt_fcatdb.
+          WHEN 'PASSNAME'.
+            <lfs_002>-edit = 'X'.
+            <lfs_002>-col_pos = 25.
+            APPEND <lfs_002> TO lt_fcatdb.
+          WHEN 'PASSAGE'.
+            <lfs_002>-edit = 'X'.
+            <lfs_002>-scrtext_s = 'Yaş'.
+            <lfs_002>-scrtext_m = 'Yaş'.
+            <lfs_002>-scrtext_l = 'Yaş'.
+            <lfs_002>-col_pos = 26.
+            APPEND <lfs_002> TO lt_fcatdb.
+          WHEN 'PASSBIRTH'.
+            <lfs_002>-scrtext_s = 'Doğum Tar.'.
+            <lfs_002>-scrtext_m = 'Doğum Tarihi'.
+            <lfs_002>-scrtext_l = 'Doğum Tarihi'.
+            <lfs_002>-edit = 'X'.
+            <lfs_002>-col_pos = 27.
+            APPEND <lfs_002> TO lt_fcatdb.
+        ENDCASE.
+      ENDIF.
+    ENDLOOP.
 
     CALL METHOD go_alv2->set_table_for_first_display
       EXPORTING
-        i_structure_name = 'GTY_TABLE2'
+        i_structure_name = 'ZOT_02_S_YOLCU'
       CHANGING
         it_fieldcatalog  = lt_fieldcat
         it_outtab        = lt_tableal2
@@ -230,6 +212,7 @@ CLASS lcl_main_controller IMPLEMENTATION.
     CALL METHOD go_alv2->register_edit_event
       EXPORTING
         i_event_id = cl_gui_alv_grid=>mc_evt_modified.
+
 
     SELECT * FROM zot_02_t_tickets INTO TABLE lt_dbtable.
 
@@ -250,117 +233,31 @@ CLASS lcl_main_controller IMPLEMENTATION.
 
   ENDMETHOD.
 
-*  METHOD set_dropdown.
-*    DATA: lt_dropdown TYPE lvc_t_drop,
-*          ls_dropdown TYPE lvc_s_drop.
-*
-*
-*    Select * into table lt_scarr from SCARR.
-*
-*
-**    LOOP AT lt_scarr INTO ls_scarr.
-**    CLEAR : ls_dropdown.
-**    ls_dropdown-handle = 1.
-**    ls_dropdown-value = ls_scarr-carrid.
-**    APPEND ls_dropdown TO lt_dropdown.
-**    ENDLOOP.
-*
-*    LOOP AT lt_scarr INTO ls_scarr.
-*    CLEAR : ls_dropdown.
-*    ls_dropdown-handle = 2.
-*    ls_dropdown-value = ls_scarr-carrname.
-*    APPEND ls_dropdown TO lt_dropdown.
-*    ENDLOOP.
-*
-*    go_alv->set_drop_down_table(
-*      EXPORTING
-*        it_drop_down       = lt_dropdown
-*    ).
+  METHOD set_dropdown.
+    DATA: lt_dropdown TYPE lvc_t_drop,
+          ls_dropdown TYPE lvc_s_drop.
 
-*  ENDMETHOD.
+    CLEAR : ls_dropdown.
+    ls_dropdown-handle = 1.
+    ls_dropdown-value = 'Economy Class'.
+    APPEND ls_dropdown TO lt_dropdown.
+    CLEAR : ls_dropdown.
+    ls_dropdown-handle = 1.
+    ls_dropdown-value = 'Business Class'.
+    APPEND ls_dropdown TO lt_dropdown.
+    CLEAR : ls_dropdown.
+    ls_dropdown-handle = 1.
+    ls_dropdown-value = 'First Class'.
+    APPEND ls_dropdown TO lt_dropdown.
 
-  METHOD handle_onf4.
-
-    TYPES: BEGIN OF lty_valuetab,
-             carrname TYPE s_carrname,
-           END OF lty_valuetab.
-
-    DATA: lt_valuetab TYPE TABLE OF lty_valuetab,
-          ls_valuetab TYPE lty_valuetab.
-
-    DATA: lt_returntab TYPE TABLE OF ddshretval,
-          ls_returntab TYPE ddshretval.
-
-    SELECT * INTO TABLE lt_scarr FROM scarr.
-
-    LOOP AT lt_scarr INTO ls_scarr.
-      CLEAR: ls_valuetab.
-      ls_valuetab-carrname = ls_scarr-carrname.
-      APPEND ls_valuetab TO lt_valuetab.
-      CLEAR ls_scarr.
-    ENDLOOP.
-
-*  CLEAR: ls_valuetab.
-*  ls_valuetab-carrname = 'Uçuş 1'.
-*  APPEND ls_valuetab TO lt_valuetab.
-*  CLEAR: ls_valuetab.
-*  ls_valuetab-carrname = 'Uçuş 2'.
-*  APPEND ls_valuetab TO lt_valuetab.
-*  CLEAR: ls_valuetab.
-*  ls_valuetab-carrname = 'Uçuş 3'.
-*  APPEND ls_valuetab TO lt_valuetab.
-
-*Bu fonksiyon belalı bir fonksiyonmuş ve internette insanların nasıl kullandığını araştırmalıyım.
-
-
-    CALL FUNCTION 'F4IF_INT_TABLE_VALUE_REQUEST'
+    go_alv->set_drop_down_table(
       EXPORTING
-        dynpprog        = sy-repid
-        retfield        = 'CARRNAME' "CARRNAME Referans alınacak
-        window_title    = 'Firma'
-        value_org       = 'S'
-      TABLES
-        value_tab       = lt_valuetab
-        return_tab      = lt_returntab
-      EXCEPTIONS
-        parameter_error = 1
-        no_values_found = 2
-        OTHERS          = 3.
-
-
-    READ TABLE lt_returntab INTO ls_returntab WITH KEY fieldname = 'F0001'.
-    IF sy-subrc EQ 0.
-      READ TABLE lt_tableal1 ASSIGNING <gfs_scarr> INDEX es_row_no-row_id.
-      IF sy-subrc EQ 0.
-        <gfs_scarr>-carrname = ls_returntab-fieldval.
-
-        go_alv->refresh_table_display( ).
-      ENDIF.
-    ENDIF.
-
-    er_event_data->m_event_handled = 'X'.
-
-  ENDMETHOD.
-
-  METHOD register_f4.
-    DATA: lt_f4 TYPE lvc_t_f4,
-          ls_f4 TYPE lvc_s_f4.
-
-    CLEAR ls_f4.
-    ls_f4-fieldname = 'CARRNAME'.
-    ls_f4-register = abap_true.
-    ls_f4-getbefore = abap_true.
-    ls_f4-chngeafter = abap_true.
-    APPEND ls_f4 TO lt_f4.
-
-
-    CALL METHOD go_alv->register_f4_for_fields
-      EXPORTING
-        it_f4 = lt_f4.
-
+        it_drop_down       = lt_dropdown
+    ).
   ENDMETHOD.
 
 ENDCLASS.
+
 
 DATA:
   go_main TYPE REF TO lcl_main_controller.

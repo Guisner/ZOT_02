@@ -13,17 +13,16 @@ MODULE user_command_0100 INPUT.
     WHEN '&ISLE'.
       LOOP AT lt_tableal1 INTO DATA(wa_tableal1).
 
-        SELECT scarr~carrid
-        FROM scarr
-        WHERE scarr~carrname = @wa_tableal1-carrname
-        INTO @ls_kayit.
-        ENDSELECT.
-
-        ls_dbtable-id = |{ wa_tableal1-id }-{ ls_kayit-carrid }|.
-*        ls_dbtable-carrid = wa_tableal1-carrid.
+        ls_dbtable-id = |{ wa_tableal1-id }-{ wa_tableal1-carrid }|.
+        ls_dbtable-carrid = wa_tableal1-carrid.
         ls_dbtable-carrname = wa_tableal1-carrname.
         ls_dbtable-nereden = wa_tableal1-nereden.
         ls_dbtable-nereye = wa_tableal1-nereye.
+        ls_dbtable-tarih = wa_tableal1-tarih.
+        ls_dbtable-classf = wa_tableal1-classf.
+        ls_dbtable-order_date = wa_tableal1-order_date.
+        ls_dbtable-luggweight = wa_tableal1-luggweight.
+        ls_dbtable-wunit = wa_tableal1-wunit.
 
         READ TABLE lt_tableal2 INTO DATA(wa_tableal2) WITH KEY id = wa_tableal1-id.
 
@@ -38,6 +37,9 @@ MODULE user_command_0100 INPUT.
           CLEAR ls_dbtable.
         ENDIF.
       ENDLOOP.
+*      CALL METHOD go_alv->check_changed_data.
+
+
 
       IF go_alv3 IS NOT INITIAL.
 
